@@ -3,9 +3,9 @@ export {};
 declare global {
   interface IProduct {
     _id: string;
-    name: string;
     __v: number;
     updatedAt: string;
+    name: string;
     stock: number;
     seller: string;
     ratings: number;

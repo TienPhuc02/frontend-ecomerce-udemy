@@ -1,13 +1,18 @@
 "use client";
+import { setProducts } from "@/lib/features/product/productSlice";
+import { RootState } from "@/lib/store";
 import { callAPIGetAllProduct } from "@/services/api";
 import { Button, Card, Image, Rate, Spin } from "antd";
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const [listProducts, setListProducts] = useState<IProduct[]>([]);
+  const dispatch = useDispatch();
   const getAllProduct = async () => {
     const res: IBackendRes<IDataBackendRes> = await callAPIGetAllProduct();
     if (res && res.data) {
+      dispatch(setProducts(res.data.products));
       setListProducts(res.data.products);
     }
   };
