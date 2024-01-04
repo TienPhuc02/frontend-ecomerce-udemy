@@ -1,0 +1,9 @@
+@font-face {
+  font-family: "AntDesign";
+  src: url("/path-to-your-fonts/your-font-file.woff2") format("woff2"),
+    url("/path-to-your-fonts/your-font-file.woff") format("woff");
+}
+
+body {
+  font-family: "AntDesign", sans-serif;
+}

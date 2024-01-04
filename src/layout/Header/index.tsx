@@ -25,12 +25,10 @@ const Header = () => {
       <div className="cart-and-auth flex justify-center min-w-[30%] min-h-16 items-center">
         <div className="mr-5 min-w-[30%]">
           <Badge count={0} showZero>
-            <Button className="bg-[#1677ff]" type="primary">
-              Giỏ Hàng
-            </Button>
+            <Button className="text-[#1677ff] ">Giỏ Hàng</Button>
           </Badge>
         </div>
-        <Button className="bg-[#1677ff]" type="primary">
+        <Button className="bg-[#1677ff] " type="primary">
           Đăng Nhập
         </Button>
       </div>

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "../../node_modules/antd/dist/reset.css";
 *,
 *:before,
 *:after {
@@ -35,4 +36,5 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 1;
+  font-family: inherit;
 }
