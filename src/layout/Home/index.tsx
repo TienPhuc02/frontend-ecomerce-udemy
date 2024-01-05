@@ -1,24 +1,43 @@
 "use client";
 import { setProducts } from "@/lib/features/product/productSlice";
-import { RootState } from "@/lib/store";
+import type { PaginationProps } from "antd";
 import { callAPIGetAllProduct } from "@/services/api";
-import { Button, Card, Image, Rate, Spin } from "antd";
+import { Button, Card, Image, Pagination, Rate, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
   const [listProducts, setListProducts] = useState<IProduct[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
+  const [totalProducts, setTotalProducts] = useState(0);
+  const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
+    currentPage,
+    pageSize
+  ) => {
+    console.log(currentPage, pageSize);
+  };
+  const onChange: PaginationProps["onChange"] = (page, pageSize) => {
+    console.log(page);
+    console.log(pageSize);
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
   const dispatch = useDispatch();
   const getAllProduct = async () => {
-    const res: IBackendRes<IDataBackendRes> = await callAPIGetAllProduct();
+    const res: IBackendRes<IDataBackendRes> = await callAPIGetAllProduct(
+      currentPage,
+      pageSize
+    );
     if (res && res.data) {
       dispatch(setProducts(res.data.products));
       setListProducts(res.data.products);
+      setTotalProducts(res.data.filteredProductCount);
     }
   };
   useEffect(() => {
     getAllProduct();
-  }, []);
+  }, [currentPage, pageSize]);
   return (
     <div>
       <div className="min-h-[600px] mx-auto max-w-[1000px] py-5">
@@ -36,7 +55,7 @@ const HomePage = () => {
                         <Image
                           height={100}
                           width={"100%"}
-                          src={product.images[1].url}
+                          src={product?.images[1]?.url}
                           alt="Image Product"
                         />
                         <p className="mb-2 min-h-[70px]">{product.name}</p>
@@ -65,6 +84,22 @@ const HomePage = () => {
               })}
             </div>
           )}
+        </div>
+        <div className="pagination-list-products mt-7 text-center">
+          <Pagination
+            total={totalProducts}
+            current={currentPage}
+            pageSize={pageSize}
+            showSizeChanger
+            showQuickJumper
+            showTotal={(total, range) =>
+              `${range[0]}-${range[1]} of ${total} items`
+            }
+            onShowSizeChange={onShowSizeChange}
+            defaultCurrent={1}
+            onChange={onChange}
+            pageSizeOptions={[4, 8, 10]}
+          />
         </div>
       </div>
     </div>

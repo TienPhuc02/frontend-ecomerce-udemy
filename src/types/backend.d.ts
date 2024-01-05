@@ -52,4 +52,5 @@ declare global {
     };
     role: string;
   }
+
 }
