@@ -1,9 +1,12 @@
+"use client";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { Avatar, Badge, Button, Col, Input, Row } from "antd";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Header = () => {
+  const router = useRouter();
   return (
     <div className="min-h-16 w-[100%] shadow-md flex items-center">
       <div className="logo-app pl-3 min-w-[20%]">
@@ -28,7 +31,11 @@ const Header = () => {
             <Button className="text-[#1677ff] ">Giỏ Hàng</Button>
           </Badge>
         </div>
-        <Button className="bg-[#1677ff] " type="primary">
+        <Button
+          onClick={() => router.push("/login")}
+          className="bg-[#1677ff] "
+          type="primary"
+        >
           Đăng Nhập
         </Button>
       </div>
