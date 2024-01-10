@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Input, message } from "antd";
 import { callAPISignUpUser } from "@/services/api";
 import { useRouter } from "next/navigation";
 type IValuesFormRegister = {
@@ -18,14 +18,32 @@ type FieldType = {
 
 const RegisterPage: React.FC = () => {
   const router = useRouter();
+  const [form] = Form.useForm();
+  const onFill = () => {
+    form.setFieldsValue({ note: "Hello world!", gender: "male" });
+  };
   const onFinish = async (values: IValuesFormRegister) => {
-    const res = await callAPISignUpUser({
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    });
-    if (res && res.data) {
-      router.push("/login");
+    try {
+      const res = await callAPISignUpUser({
+        name: values.name,
+        email: values.email,
+        password: values.password,
+      });
+
+      if (res && res.data) {
+        console.log(res);
+        message.success(res.data.message);
+        form.resetFields();
+        router.push("/login");
+      }
+    } catch (error) {
+      console.log("Registration failed:", error);
+
+      if (error instanceof Error && error.message) {
+        message.error(error.message);
+      } else {
+        message.error("Registration failed. Please try again.");
+      }
     }
   };
   const onFinishFailed = (errorInfo: any) => {
@@ -35,6 +53,7 @@ const RegisterPage: React.FC = () => {
     <Form
       className="mx-auto border border-spacing-1 shadow-md p-3 rounded-xl"
       name="basic"
+      form={form}
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       style={{ maxWidth: 600 }}
@@ -89,6 +108,9 @@ const RegisterPage: React.FC = () => {
       <Form.Item wrapperCol={{ span: 24 }}>
         <Button type="primary" className="bg-[#167fff]" htmlType="submit">
           Sign Up
+        </Button>
+        <Button type="link" htmlType="button" onClick={onFill}>
+          Fill form
         </Button>
       </Form.Item>
     </Form>
