@@ -3,6 +3,7 @@ import React from "react";
 import { Button, Card, Checkbox, Form, Input, message } from "antd";
 import { callAPILoginUser } from "@/services/api";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -24,9 +25,12 @@ const LoginPage: React.FC = () => {
     if (res) {
       console.log(res);
       message.success(res.data.message);
-    //   router.push("/");
+      router.push("/");
     }
     console.log("Success:", values);
+  };
+  const handleClickRegisterNow = () => {
+    router.push("/signup");
   };
   return (
     <Form
@@ -35,7 +39,7 @@ const LoginPage: React.FC = () => {
       labelCol={{ span: 24 }}
       wrapperCol={{ span: 24 }}
       style={{ maxWidth: 600 }}
-      initialValues={{ remember: true }}
+      initialValues={{ remember: false }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
@@ -56,16 +60,35 @@ const LoginPage: React.FC = () => {
         <Input.Password />
       </Form.Item>
 
-      <Form.Item<FieldType>
-        name="remember"
-        labelCol={{ span: 12 }}
-        valuePropName="checked"
-      >
-        <Checkbox>Remember me</Checkbox>
+      <Form.Item>
+        <div className="flex justify-between">
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
+
+          <a className="login-form-forgot mr-3 text-[#167fff]" href="">
+            Forgot password
+          </a>
+        </div>
       </Form.Item>
 
-      <Form.Item labelCol={{ span: 24 }} wrapperCol={{ offset: 8, span: 16 }}>
-        <Button htmlType="submit">Submit</Button>
+      <Form.Item>
+        <div className="flex justify-between">
+          <Button
+            htmlType="submit"
+            className="login-form-button mr-3 bg-[#167fff]"
+            type="primary"
+          >
+            Log in
+          </Button>
+          <a
+            className="text-[#167fff]"
+            // href="/signup"
+            onClick={handleClickRegisterNow}
+          >
+            Register now!
+          </a>
+        </div>
       </Form.Item>
     </Form>
   );

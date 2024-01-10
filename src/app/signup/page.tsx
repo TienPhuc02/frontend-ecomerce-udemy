@@ -1,7 +1,8 @@
+import RegisterPage from "@/pages/Register";
 import React from "react";
 
 const SignUpPage = () => {
-  return <div>SignUpPage</div>;
+  return <div><RegisterPage/></div>;
 };
 
 export default SignUpPage;

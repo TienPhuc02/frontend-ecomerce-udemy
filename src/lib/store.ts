@@ -1,10 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./features/user/userSlice";
-import authReducer from "./features/auth/authSlice";
 import productReducer from "./features/product/productSlice";
 
 export const store = configureStore({
-  reducer: { user: userReducer, auth: authReducer, product: productReducer },
+  reducer: { user: userReducer, product: productReducer },
 });
 
 // Infer the type of makeStore

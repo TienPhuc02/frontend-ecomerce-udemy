@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../../store";
 interface UserState {
+  isAuthenticated: boolean;
   name: string;
   email: string;
   avatar: {
@@ -12,6 +13,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
+  isAuthenticated: false,
   name: "",
   email: "",
   avatar: {

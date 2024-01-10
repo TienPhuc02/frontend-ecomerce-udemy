@@ -13,3 +13,14 @@ export const callAPILoginUser = ({
 }) => {
   return axios.post(`/api/v1/login`, { email, password });
 };
+export const callAPISignUpUser = ({
+  name,
+  email,
+  password,
+}: {
+  name: string;
+  email: string;
+  password: string;
+}) => {
+  return axios.post(`/api/v1/register`, { name, email, password });
+};
