@@ -4,6 +4,8 @@ import { Button, Card, Checkbox, Form, Input, message } from "antd";
 import { callAPILoginUser } from "@/services/api";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch } from "react-redux";
+import { setAuthenticated } from "@/lib/features/user/userSlice";
 
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
@@ -16,15 +18,18 @@ type FieldType = {
 };
 
 const LoginPage: React.FC = () => {
+  const dispatch = useDispatch();
   const router = useRouter();
   const onFinish = async (values: any) => {
     const res = await callAPILoginUser({
       email: values.email,
       password: values.password,
     });
-    if (res) {
+    if (res && res.data) {
       console.log(res);
-      message.success(res.data.message);
+      localStorage.setItem("access_token", res?.data?.token);
+      message.success(res?.data?.message);
+      dispatch(setAuthenticated(res.data))
       router.push("/");
     }
     console.log("Success:", values);
@@ -81,11 +86,7 @@ const LoginPage: React.FC = () => {
           >
             Log in
           </Button>
-          <a
-            className="text-[#167fff]"
-            // href="/signup"
-            onClick={handleClickRegisterNow}
-          >
+          <a className="text-[#167fff]" onClick={handleClickRegisterNow}>
             Register now!
           </a>
         </div>

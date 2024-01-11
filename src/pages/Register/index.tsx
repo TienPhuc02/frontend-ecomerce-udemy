@@ -100,7 +100,10 @@ const RegisterPage: React.FC = () => {
           >
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
-          <a className="login-form-forgot mr-3 text-[#167fff]" href="/login">
+          <a
+            className="login-form-forgot mr-3 text-[#167fff]"
+            onClick={() => router.push("/login")}
+          >
             You have account?
           </a>
         </div>

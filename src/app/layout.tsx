@@ -1,6 +1,5 @@
-import Header from "@/layout/Header";
 import "./globals.css";
-import Footer from "@/layout/Footer";
+import StoreProvider from "@/lib/storeProvider";
 
 export default function RootLayout({
   children,
@@ -10,9 +9,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-       
-        {children}
-       
+        <StoreProvider>{children}</StoreProvider>
       </body>
     </html>
   );

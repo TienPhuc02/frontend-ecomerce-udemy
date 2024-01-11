@@ -24,3 +24,6 @@ export const callAPISignUpUser = ({
 }) => {
   return axios.post(`/api/v1/register`, { name, email, password });
 };
+export const refreshLogin = () => {
+  return axios.get(`/api/v1/refresh`);
+};

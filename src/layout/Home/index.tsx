@@ -1,16 +1,20 @@
 "use client";
 import { setProducts } from "@/lib/features/product/productSlice";
 import type { PaginationProps } from "antd";
-import { callAPIGetAllProduct } from "@/services/api";
+import { callAPIGetAllProduct, refreshLogin } from "@/services/api";
 import { Button, Card, Image, Pagination, Rate, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useAppSelector } from "@/lib/hooks";
+import { setAuthenticated } from "@/lib/features/user/userSlice";
 const HomePage = () => {
   const [listProducts, setListProducts] = useState<IProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(4);
   const [totalProducts, setTotalProducts] = useState(0);
+  const user = useAppSelector((state) => state.user);
+
+  console.log("🚀 ~ HomePage ~ user:", user);
   const onShowSizeChange: PaginationProps["onShowSizeChange"] = (
     currentPage,
     pageSize
@@ -35,8 +39,19 @@ const HomePage = () => {
       setTotalProducts(res.data.filteredProductCount);
     }
   };
+  const getRefreshLogin = async () => {
+    const res = await refreshLogin();
+    console.log("🚀 ~ getRefreshLogin ~ res:", res);
+    dispatch(setAuthenticated(res.data));
+    if (res && res.data) {
+      // dispatch(setAuthenticated())
+    }
+  };
   useEffect(() => {
     getAllProduct();
+    if (localStorage.getItem("access_token") !== "") {
+      getRefreshLogin();
+    }
   }, [currentPage, pageSize]);
   return (
     <div>
