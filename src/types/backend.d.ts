@@ -52,5 +52,13 @@ declare global {
     };
     role: string;
   }
-
+  interface IRequest {
+    url: string;
+    method: string;
+    body?: { [key: string]: any };
+    queryParams?: any;
+    useCredentials?: boolean;
+    headers?: any;
+    nextOption?: any;
+  }
 }

@@ -1,3 +1,4 @@
+import { AntdRegistry } from "@ant-design/nextjs-registry";
 import "./globals.css";
 import StoreProvider from "@/lib/storeProvider";
 
@@ -9,7 +10,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <StoreProvider>{children}</StoreProvider>
+        <StoreProvider>
+          <AntdRegistry>{children}</AntdRegistry>
+        </StoreProvider>
       </body>
     </html>
   );
